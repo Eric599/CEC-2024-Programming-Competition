@@ -67,9 +67,13 @@ $ npm start
 The frontend application should now be running on http://localhost:3000. Navigate to that url in your browser and begin using the application!
 
 ## Software Design Architecture
+OceanNext uses a single tier client server architecture to provide its services. The front end and backend are completely segregated, this allows for loose coupling between the business logic and UI logic.
+    
 
 ## Algorithm Analysis
+We decided to use a hybrid algorithm approach to determining the best place to park rigs. We used a greedy and dynamic programming approach to analyze the given data. The algorithm makes a series of decisions where it looks for the best move at each step (e.g., finding the location with the maximum net value of resources minus preserves, considering the constraints). It selects the move that seems best at the moment, which is a hallmark of greedy algorithms. Each move the rig has to make is dependent on its previous move which exhibits characteristics of dynamic programming.
 
+Since the rigs can only move 5 blocks a day, a heuristic solution was incorporated to ensure that the algorithm is not computationally heavy.
 ## Contributors
 - **Matthew Collett**: Backend Developer
 - **Ethan Garnier**: Frontend Developer
