@@ -7,7 +7,7 @@ OceanNext Consulting delivers innovative algorithmic solutions for optimal offsh
 ## Tech-Stack
 The following technologies and resources are used in this application
 ### Frontend
-- [npm](https://www.npmjs.com/)
+- [Node.js and npm](https://nodejs.org/en)
 - Javascript
 - [React.js](https://react.dev/)
 - [MaterialUI](https://mui.com/material-ui/)
@@ -48,6 +48,23 @@ $ flask --app run run
 The server should now be running on http://localhost:5000
 
 ## Frontend Setup
+To run the frontend application:
+1. Ensure you have the following installed.
+    - [Node.js and npm](https://nodejs.org/en)
+
+2. Navigate to the `/frontend` directory:
+```
+$ cd frontend
+```
+3. Install the required dependencies:
+```
+$ npm install
+```
+4. Start the node project:
+```
+$ npm start
+```
+The frontend application should now be running on http://localhost:3000. Navigate to that url in your browser and begin using the application!
 
 ## Software Design Architecture
 
