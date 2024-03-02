@@ -2,7 +2,6 @@ from flask import request, jsonify
 import json
 from app.api import api
 from app.extensions import cache
-from app.utils.test import test
 
 
 @api.route('/compute', methods=['POST'])
