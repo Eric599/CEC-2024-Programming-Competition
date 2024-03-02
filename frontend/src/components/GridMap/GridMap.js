@@ -62,10 +62,6 @@ function numberToColorHsl(i) {
 const GRID_ROWS = 100;
 const GRID_COLS = 100;
 
-const displayCellData = (cell) => {
-  return `Location: ${cell['SK'].split('#')[1]}\n\tTemperature: ${cell['temp']}\n\tAir Quality Index: ${cell['aqi']}\n\tpH: ${cell['ph']}\n\tHumididty: ${cell['humidity']}`
-}
-
 export default function GridMap({ displayMap, setDisplayMap }) {
   const [xLabels, setXLabels] = useState([]);
   const [yLabels, setYLabels] = useState([]);
@@ -126,7 +122,7 @@ export default function GridMap({ displayMap, setDisplayMap }) {
           setDisplayMap(false);
         });
     }
-  }, [day])
+  }, [day, displayMap])
 
   return (
     <React.Fragment>
@@ -146,12 +142,10 @@ export default function GridMap({ displayMap, setDisplayMap }) {
             )}
             xLabelsStyle={() => ({
               color: "transparent",
-              // color: index % 2 ? "transparent" : "#777",
               fontSize: ".25rem"
             })}
             yLabelsStyle={() => ({
               color: "transparent",
-              // color: index % 2 ? "transparent" : "#777",
               fontSize: ".25rem"
             })}
             cellStyle={(_x, _y, ratio) => ({

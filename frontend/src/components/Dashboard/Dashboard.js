@@ -15,37 +15,7 @@ import axios from 'axios';
 //#region Backend Queries
 const QUERY_URL = "http://localhost:5000/api/compute"
 
-const computeGridMap = async (resources, preserves) => {
-  var resourceArr = []
-  var preservesArr = []
 
-  for (var property in resources)
-  {
-    if (resources[property]) resourceArr.push(property)
-  }
-
-  for (var property in preserves)
-  {
-    if (preserves[property]) preservesArr.push(property)
-  }
-
-  await axios
-    .post(QUERY_URL, 
-      {
-        data: {
-          resources: resourceArr,
-          preserves: preservesArr
-        }
-      }, 
-      {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-}
 //#endregion
 
 //#region UI Setup
@@ -83,6 +53,41 @@ const AppBar = styled(MuiAppBar, {
 
 export default function Dashboard({ title, theme }) {
   const [displayMap, setDisplayMap] = useState(false)
+
+  const computeGridMap = async (resources, preserves) => {
+    var resourceArr = []
+    var preservesArr = []
+
+    for (var property in resources) {
+      if (resources[property]) resourceArr.push(property)
+    }
+
+    for (var property in preserves) {
+      if (preserves[property]) preservesArr.push(property)
+    }
+
+    await axios
+      .post(QUERY_URL,
+        {
+          data: {
+            resources: resourceArr,
+            preserves: preservesArr
+          }
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+      .then((resp) => {
+        if (resp.status === 200) {
+          setDisplayMap(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 
   return (
     <ThemeProvider theme={theme}>
