@@ -52,7 +52,7 @@ const computeGridMap = async (resources, preserves) => {
 function Footer(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      Rig Path Analysis
+      OceanNext Consulting
       {' '}
       {new Date().getFullYear()}
       {'.'}
