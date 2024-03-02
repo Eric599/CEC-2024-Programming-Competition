@@ -3,7 +3,7 @@ from app.api import api
 from app.extensions import cache
 
 
-@api.route('/compute', methods=['POST'])
+@api.route('/api/compute', methods=['POST'])
 def compute():
     if request.content_type == 'application/json':
         json_data = request.json['data']
@@ -20,7 +20,7 @@ def compute():
         return jsonify({'error': 'Content-Type must be application/json'}), 405
 
 
-@api.route('/get-day', methods=['GET'])
+@api.route('/api/get-day', methods=['GET'])
 def get_day():
     day = request.args.get('day', type=int)
     if day is not None:
