@@ -6,16 +6,10 @@ from app.extensions import cache
 
 @api.route('/compute', methods=['POST'])
 def compute():
-    if request.content_type == 'application/x-www-form-urlencoded':
-        form_data = request.form
-        resources_entry = form_data.get('RESOURCES')
-        preserves_entry = form_data.get('PRESERVES')
-
-        try:
-            resources = json.loads(resources_entry)
-            preserves = json.loads(preserves_entry)
-        except json.JSONDecodeError as e:
-            return jsonify({'error': 'Invalid JSON format'}, e), 400
+    if request.content_type == 'application/json':
+        json_data = request.json['data']
+        resources = json_data['resources']
+        preserves = json_data['preserves']
 
         if not isinstance(resources, list) or not isinstance(preserves, list):
             return jsonify({'error': 'Entries must be lists'}), 400
@@ -24,7 +18,7 @@ def compute():
         cache.set('computed_map', computed_map)
         return jsonify({'message': 'success'}), 200
     else:
-        return jsonify({'error': 'Content-Type must be application/x-www-form-urlencoded'}), 400
+        return jsonify({'error': 'Content-Type must be application/json'}), 405
 
 
 @api.route('/get-day', methods=['GET'])

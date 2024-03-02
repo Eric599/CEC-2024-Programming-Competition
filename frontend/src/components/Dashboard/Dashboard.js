@@ -23,29 +23,38 @@ import ParamSelector from '../ParamSelector';
 import axios from 'axios';
 
 //#region Backend Queries
-const QUERY_URL = "http://localhost:8080/compute"
+const QUERY_URL = "http://localhost:5000/compute"
 
 const computeGridMap = async (resources, preserves) => {
-  // resources is a string[] of selected resources
-  // preserves is a string[] of selected preserves
-  var queryDict = {
-    "RESOURCES": resources,
-    "PRESERVES": preserves
-  };
+  var resourceArr = []
+  var preservesArr = []
 
-  // TODO: CHANGE TO POST
-
-  const params = {
-    "RESOURCES": resources,
-    "PRESERVES": preserves
-  };
-
-  const resp = await axios.get(QUERY_URL, { params });
-
-  if (resp !=  null)
+  for (var property in resources)
   {
-    // Set the grid map data to the response that is returned
+    if (resources[property]) resourceArr.push(property)
   }
+
+  for (var property in preserves)
+  {
+    if (preserves[property]) preservesArr.push(property)
+  }
+
+  await axios
+    .post(QUERY_URL, 
+      {
+        data: {
+          resources: resourceArr,
+          preserves: preservesArr
+        }
+      }, 
+      {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+    })
 }
 //#endregion
 
