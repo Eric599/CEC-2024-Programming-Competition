@@ -7,29 +7,46 @@ import os
 
 # Specify the directory you want to start from
 root_directory = 'data/'
-resource_data = {}
+resource_data = {
+    "algal" : [[] for _ in range(30)],
+    "coral" : [[] for _ in range(30)],
+    "helium" : [[] for _ in range(30)],
+    "metal" : [[] for _ in range(30)],
+    "oil" : [[] for _ in range(30)],
+    "ship" : [[] for _ in range(30)],
+    "species" : [[] for _ in range(30)],
+    "temperature" : [[] for _ in range(30)],
+    "wind" : [[] for _ in range(30)],
+    "world" : [[] for _ in range(30)]
+}
 grid_size = 100
 
 for root, dirs, files in os.walk(root_directory):
     print(f"Currently looking in: {root}")
     for dirname in dirs:
         print(f"Directory: {root}")
-        # os.chdir(dirname)
-        
+
         days_data = []
-    for i, filename in files:
+        day = 0
+    for filename in files:
         name = filename.split('_', 1)[0]
         print(f"File: {filename}")
         day_data = pd.read_csv(root + "/" + filename).values
-        # days_data.append(days_data)
-        # Initialize an empty 2D array (grid) with NaN or zeros
         grid = np.full((grid_size, grid_size), np.nan)
-    
-        grid[day_data[2], day_data[1]] = day_data[3]  # Assuming x and y are 0-indexed
+
+
+        for i, row in enumerate(day_data):
+            x_index = int(day_data[i][2])
+            y_index = int(day_data[i][1])
+            # data = day_data[i][3]
         
-        print("DATA: " + name)
-        # print(day_data[0])
-        resource_data[name] = [i][grid]
+            grid[y_index, x_index] = day_data[i][3]  # Assuming x and y are 0-indexed
+            days_data.append(grid)
+
+        print(len(days_data))
+        resource_data[name][day].append([days_data])
+        print("day" + str(day))
+        day = day + 1
 
 # Function to load the data for a single resource across all 30 days
 # def load_resource_data(resource_name, data_directory, num_days=30):
