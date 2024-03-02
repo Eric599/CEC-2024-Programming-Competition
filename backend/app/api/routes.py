@@ -1,5 +1,4 @@
 from flask import request, jsonify
-import json
 from app.api import api
 from app.extensions import cache
 
