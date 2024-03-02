@@ -33,6 +33,8 @@ const computeGridMap = async (resources, preserves) => {
     "PRESERVES": preserves
   };
 
+  // TODO: CHANGE TO POST
+
   const params = {
     "RESOURCES": resources,
     "PRESERVES": preserves
@@ -59,19 +61,6 @@ function Footer(props) {
   );
 }
 
-function SideNavBar() {
-  return (
-    <List component="nav">
-      <ListItemButton>
-        <ListItemIcon>
-          <DashboardIcon />
-        </ListItemIcon>
-        <ListItemText primary="Dashboard" />
-      </ListItemButton>
-    </List>
-  );
-}
-
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -91,63 +80,19 @@ const AppBar = styled(MuiAppBar, {
     }),
   }),
 }));
-
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    '& .MuiDrawer-paper': {
-      position: 'relative',
-      whiteSpace: 'nowrap',
-      width: drawerWidth,
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      boxSizing: 'border-box',
-      ...(!open && {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(9),
-        },
-      }),
-    },
-  }),
-);
 //#endregion
 
 export default function Dashboard({ title, theme }) {
-  const [gridMapData, setGridMapData] = useState([]);
-  const [open, setOpen] = useState(false);
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
-
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex', width: '100%' }}>
         <CssBaseline />
-        <AppBar position="absolute" open={open}>
+        <AppBar position="absolute" open={false}>
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
             }}
           >
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={toggleDrawer}
-              sx={{
-                marginRight: '36px',
-                ...(open && { display: 'none' }),
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
             <Typography
               component="h1"
               variant="h6"
@@ -159,22 +104,6 @@ export default function Dashboard({ title, theme }) {
             </Typography>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={open}>
-          <Toolbar
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              px: [1],
-            }}
-          >
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </Toolbar>
-          <Divider />
-          <SideNavBar />
-        </Drawer>
         <Box
           component="main"
           sx={{
@@ -211,7 +140,7 @@ export default function Dashboard({ title, theme }) {
                     flexDirection: 'column',
                   }}
                 >
-                  <GridMap gridMapData={gridMapData} />
+                  <GridMap />
                 </Paper>
               </Grid>
             </Grid>
