@@ -1,29 +1,19 @@
 import React, { useState } from 'react';
 import { styled, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import DashboardIcon from '@mui/icons-material/Dashboard';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import GridMap from '../GridMap';
 import ParamSelector from '../ParamSelector';
 import axios from 'axios';
 
 //#region Backend Queries
-const QUERY_URL = "http://localhost:5000/compute"
+const QUERY_URL = "http://localhost:5000/api/compute"
 
 const computeGridMap = async (resources, preserves) => {
   var resourceArr = []
@@ -92,6 +82,8 @@ const AppBar = styled(MuiAppBar, {
 //#endregion
 
 export default function Dashboard({ title, theme }) {
+  const [displayMap, setDisplayMap] = useState(false)
+
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex', width: '100%' }}>
@@ -149,7 +141,7 @@ export default function Dashboard({ title, theme }) {
                     flexDirection: 'column',
                   }}
                 >
-                  <GridMap />
+                  <GridMap displayMap={displayMap} setDisplayMap={setDisplayMap} />
                 </Paper>
               </Grid>
             </Grid>

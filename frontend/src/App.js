@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Dashboard title='Rig Path Analysis Dashboard' theme={defaultTheme}/>
+        <Dashboard title='OceanNext Consulting Dashboard' theme={defaultTheme}/>
       </header>
     </div>
   );

@@ -6,6 +6,9 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import Checkbox from '@mui/material/Checkbox';
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
+
 import { Button } from '@mui/material';
 
 const RESOURCE_ERROR = "Select at least 1 resource";
@@ -46,111 +49,122 @@ export default function ParamSelector({ onComputeMap }) {
   const preserves_error = [algal, coral, species, preserve_ship].filter((v) => v).length < 1;
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <FormControl
-        required
-        error={resource_error}
-        component="fieldset"
-        sx={{ m: 3 }}
-        variant="standard"
-      >
-        <FormLabel component="legend">Pick one resource</FormLabel>
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={oil}
-                onChange={handleResourceChange}
-                name="oil" />
-            }
-            label="Oil"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={helium}
-                onChange={handleResourceChange}
-                name="helium" />
-            }
-            label="Helium"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={metal}
-                onChange={handleResourceChange}
-                name="metal" />
-            }
-            label="Metal"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={resource_ship}
-                onChange={handleResourceChange}
-                name="resource_ship" />
-            }
-            label="Ship"
-          />
-        </FormGroup>
-        <FormHelperText>{RESOURCE_ERROR}</FormHelperText>
-      </FormControl>
+    <Box sx={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }}>
+      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Grid item xs={12}>
+          <FormControl
+            required
+            error={resource_error}
+            component="fieldset"
+            sx={{ m: 3 }}
+            variant="standard"
+          >
+            <FormLabel component="legend">Pick one resource</FormLabel>
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={oil}
+                    onChange={handleResourceChange}
+                    name="oil" />
+                }
+                label="Oil"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={helium}
+                    onChange={handleResourceChange}
+                    name="helium" />
+                }
+                label="Helium"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={metal}
+                    onChange={handleResourceChange}
+                    name="metal" />
+                }
+                label="Metal"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={resource_ship}
+                    onChange={handleResourceChange}
+                    name="resource_ship" />
+                }
+                label="Ship"
+              />
+            </FormGroup>
+            <FormHelperText>{RESOURCE_ERROR}</FormHelperText>
+          </FormControl>
 
-      <FormControl
-        required
-        error={preserves_error}
-        component="fieldset"
-        sx={{ m: 3 }}
-        variant="standard"
-      >
-        <FormLabel component="legend">Pick one preservation</FormLabel>
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={algal}
-                onChange={handlePreservesChange}
-                name="algal" />
-            }
-            label="Algal"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={coral}
-                onChange={handlePreservesChange}
-                name="coral" />
-            }
-            label="Coral"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={species}
-                onChange={handlePreservesChange}
-                name="species" />
-            }
-            label="Species"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={preserve_ship}
-                onChange={handlePreservesChange}
-                name="preserve_ship" />
-            }
-            label="Ship"
-          />
-        </FormGroup>
-        <FormHelperText>{PRESERVES_ERROR}</FormHelperText>
-      </FormControl>
-
-      <Button
-        variant="contained"
-        onClick={() => {
-          onComputeMap(resourceState, preservesState);
-        }}
-      >Compute Map</Button>
+          <FormControl
+            required
+            error={preserves_error}
+            component="fieldset"
+            sx={{ m: 3 }}
+            variant="standard"
+          >
+            <FormLabel component="legend">Pick one preservation</FormLabel>
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={algal}
+                    onChange={handlePreservesChange}
+                    name="algal" />
+                }
+                label="Algal"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={coral}
+                    onChange={handlePreservesChange}
+                    name="coral" />
+                }
+                label="Coral"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={species}
+                    onChange={handlePreservesChange}
+                    name="species" />
+                }
+                label="Species"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={preserve_ship}
+                    onChange={handlePreservesChange}
+                    name="preserve_ship" />
+                }
+                label="Ship"
+              />
+            </FormGroup>
+            <FormHelperText>{PRESERVES_ERROR}</FormHelperText>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            variant="contained"
+            onClick={() => {
+              onComputeMap(resourceState, preservesState);
+            }}
+          >
+            Compute Map
+          </Button>
+        </Grid>
+      </Container>
     </Box>
   );
 }

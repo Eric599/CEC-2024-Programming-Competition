@@ -3,7 +3,7 @@ import axios from 'axios';
 import { HeatMapGrid } from 'react-grid-heatmap'
 import DateSelector from '../DateSelector'
 
-const DATE_URL = "http://localhost:5000/get-day";
+const DATE_URL = "http://localhost:5000/api/get-day";
 
 /**
  * The below color calculation code has been taken from the following
@@ -66,14 +66,13 @@ const displayCellData = (cell) => {
   return `Location: ${cell['SK'].split('#')[1]}\n\tTemperature: ${cell['temp']}\n\tAir Quality Index: ${cell['aqi']}\n\tpH: ${cell['ph']}\n\tHumididty: ${cell['humidity']}`
 }
 
-export default function GridMap() {
+export default function GridMap({ displayMap, setDisplayMap }) {
   const [xLabels, setXLabels] = useState([]);
   const [yLabels, setYLabels] = useState([]);
   const [graphData, setGraphData] = useState([]);
   // const [cellData, setCellData] = useState([]);
 
   const [day, setDay] = useState(1);
-  const [displayGrid, setDisplayGrid] = useState(false);
 
   const processGraphData = (data) => {
     setXLabels(Array(GRID_COLS).fill().map((_, i) => i));
@@ -121,23 +120,23 @@ export default function GridMap() {
         .get(`${DATE_URL}?day=${day}`)
         .then((response) => {
           processGraphData(response.data);
-          setDisplayGrid(true);
+          setDisplayMap(true);
         })
         .catch((_) => {
-          setDisplayGrid(false);
+          setDisplayMap(false);
         });
     }
   }, [day])
 
   return (
     <React.Fragment>
-      <DateSelector onSelection={setDay} />
+      <DateSelector onSelection={setDay} disabled={!displayMap}/>
       <div style={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-        {displayGrid ? (
+        {displayMap ? (
           <HeatMapGrid
             data={graphData}
             xLabels={xLabels}
