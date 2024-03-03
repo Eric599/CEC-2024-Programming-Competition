@@ -29,6 +29,8 @@ def get_starting_point(data, resources, preserves):
                             sums_matrix[row_index][col_index] += daily_data[0][row_index][col_index]
                         elif category in preserves:
                             sums_matrix[row_index][col_index] -= daily_data[0][row_index][col_index]
+                        elif len(data['wind'][0]) > row_index and len(data['wind'][0][row_index]) > col_index and data['wind'][0][row_index][col_index] > 10:
+                            sums_matrix[row_index][col_index] *= 0.8
                         else:
                             continue
 
@@ -66,6 +68,8 @@ def get_next_move(data, resources, preserves, x, y, day, distance=5):
                             sums_matrix[row_index][col_index] += daily_data[day][row_index][col_index]
                         elif category in preserves:
                             sums_matrix[row_index][col_index] -= daily_data[day][row_index][col_index]
+                        elif len(data['wind'][day]) > row_index and len(data['wind'][day][row_index]) > col_index and data['wind'][day][row_index][col_index] > 10:
+                            sums_matrix[row_index][col_index] *= 0.8
                         else:
                             continue
 
