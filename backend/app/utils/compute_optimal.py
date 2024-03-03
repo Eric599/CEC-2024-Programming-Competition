@@ -1,11 +1,7 @@
 import numpy as np
-import math
-
-def calculate_distance(point1, point2):
-    return math.sqrt((point2[0] - point1[0])**2 + (point2[1] - point1[1])**2)
 
 
-def get_starting_point(data, resources, preserves, unavailable_location=None):
+def get_starting_point(data, resources, preserves):
     # Assuming all categories have the same structure for the first day,
     # determine the number of rows and columns from the first category's first day.
     # This assumes at least one category exists and has at least one day of data.
@@ -25,11 +21,7 @@ def get_starting_point(data, resources, preserves, unavailable_location=None):
             for col_index in range(len(daily_data[0][row_index])):
                 # Add the data point to the corresponding position in the sums_matrix
                 # Make sure the data exists to avoid IndexError
-
-            
                 if data['world'][0][row_index][col_index] == 1:
-                    sums_matrix[row_index][col_index] = -float('inf')
-                elif unavailable_location and calculate_distance(unavailable_location, sums_matrix[row_index][col_index]) > 2 and (row_index, col_index) == unavailable_location:
                     sums_matrix[row_index][col_index] = -float('inf')
                 else:
                     if daily_data and daily_data[0] and daily_data[0][row_index]:
@@ -49,7 +41,7 @@ def get_starting_point(data, resources, preserves, unavailable_location=None):
     return (max_index_2d)
 
 
-def get_next_move(data, resources, preserves, x, y, day, unavailable_location = None, distance=5):
+def get_next_move(data, resources, preserves, x, y, day, distance=5):
     sample_category = next(iter(data.values()))
     num_rows = len(sample_category[0])
     num_columns = len(sample_category[0][0])
@@ -67,8 +59,6 @@ def get_next_move(data, resources, preserves, x, y, day, unavailable_location = 
         for row_index in range(row_start, row_end):
             for col_index in range(col_start, col_end):
                 if data['world'][day][row_index][col_index] == 1:
-                    sums_matrix[row_index][col_index] = -float('inf')
-                elif unavailable_location and calculate_distance(unavailable_location, sums_matrix[row_index][col_index]) > 2 and (row_index, col_index) == unavailable_location:
                     sums_matrix[row_index][col_index] = -float('inf')
                 else:
                     if daily_data and daily_data[day] and daily_data[day][row_index]:
@@ -97,24 +87,11 @@ def get_next_move(data, resources, preserves, x, y, day, unavailable_location = 
 
 
 def get_route(data, resources, preserve):
-    coordinates1 = []
-    start_point1 = get_starting_point(data, resources, preserve)
-    coordinates1.append(start_point1)
-
-    coordinates2 = []
-    start_point2 = get_starting_point(data, resources, preserve, start_point1)
-    coordinates2.append(start_point2)
-    
+    coordinates = []
+    start_point = get_starting_point(data, resources, preserve)
+    coordinates.append(start_point)
     for i in range(len(data["wind"])):
-        #Drill 1
-        y = coordinates1[i][0]
-        x = coordinates1[i][1]
-        coordinates1.append(get_next_move(data, resources, preserve, y, x, i))
-        
-        #Drill 2
-        y2 = coordinates2[i][0]
-        x2 = coordinates2[i][1]
-        coordinates2.append(get_next_move(data, resources, preserve, y2, x2, i, coordinates1[i]))
-
-
-    return coordinates1, coordinates2
+        y = coordinates[i][0]
+        x = coordinates[i][1]
+        coordinates.append(get_next_move(data, resources, preserve, y, x, i))
+    return coordinates

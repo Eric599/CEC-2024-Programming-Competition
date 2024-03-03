@@ -77,43 +77,16 @@ export default function GridMap() {
     // Once we know the dimensions of the map,
     // we can start populating each cell's data
 
-
-    /*let cellDataArr = new Array(GRID_ROWS)
-      .fill(0)
-      .map(() =>
-        new Array(GRID_COLS)
-          .fill(0)
-      );*/
-
     // Set the data array as the world array
     let dataArr = data["world"]; //.map((x) => parseInt(x));
 
     // Set the position of the rig in the world array
     var rigStr = data["computed_map"].replace("[", "").replace("]", "");
     var rigPos = rigStr.split(",").map(Number)
-    //var rigPos = data["computed_map"].map((x) => parseInt(x))
-    //console.log(typeof(rigPos[1]))
     dataArr[rigPos[0]][rigPos[1]] = 150;
-
-    console.log(dataArr)
-
-
-    // Iterate through the data again to place each
-    // cell's data into their respective location.
-    /*data
-      .forEach(entry => {
-        // const location = entry['SK'].split('#')[1];
-        // const idx = parseLocationStr(location);
-        // if (idx[0] < 0 || idx[1] < 0) return;
-
-        // const agroScore = parseInt(entry['agroScore']);
-        dataArr[idx[0]][idx[1]] = 0;
-        //cellDataArr[idx[0]][idx[1]] = entry;
-      })*/
 
     // Store the new graph and cell data
     setGraphData(dataArr);
-    // setCellData(cellDataArr);
   }
 
   useEffect(() => {
