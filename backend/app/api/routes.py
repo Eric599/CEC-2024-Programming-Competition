@@ -32,7 +32,7 @@ def get_day():
         if computed_map is None:
             return jsonify({'error': 'Key: "computed_map" not found in cache'}), 404
         else:
-            return jsonify({'world': data['world'][day], 'computed_map': computed_map}), 200
+            return jsonify({'world': data['world'][day - 1], 'computed_map': json.dumps(computed_map[day - 1], cls=NpEncoder)}), 200
     else:
         return jsonify({'error': 'Missing day query parameter'}), 400
 

@@ -81,7 +81,7 @@ export default function Dashboard({ title, theme }) {
         })
       .then((resp) => {
         if (resp.status === 200) {
-          setDisplayMap(true);
+          setDisplayMap(true)
         }
       })
       .catch((err) => {
@@ -146,7 +146,11 @@ export default function Dashboard({ title, theme }) {
                     flexDirection: 'column',
                   }}
                 >
-                  <GridMap displayMap={displayMap} setDisplayMap={setDisplayMap} />
+                  {displayMap ? (
+                    <GridMap />
+                  ) : (
+                    <p></p>
+                  )}
                 </Paper>
               </Grid>
             </Grid>

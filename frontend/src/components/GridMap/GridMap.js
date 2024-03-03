@@ -62,11 +62,11 @@ function numberToColorHsl(i) {
 const GRID_ROWS = 100;
 const GRID_COLS = 100;
 
-export default function GridMap({ displayMap, setDisplayMap }) {
+export default function GridMap() {
   const [xLabels, setXLabels] = useState([]);
   const [yLabels, setYLabels] = useState([]);
   const [graphData, setGraphData] = useState([]);
-  // const [cellData, setCellData] = useState([]);
+  const [displayMap, setDisplayMap] = useState(true)
 
   const [day, setDay] = useState(1);
 
@@ -86,11 +86,17 @@ export default function GridMap({ displayMap, setDisplayMap }) {
       );*/
 
     // Set the data array as the world array
-    let dataArr = data["world"];
+    let dataArr = data["world"]; //.map((x) => parseInt(x));
 
     // Set the position of the rig in the world array
-    var rigPos = data["rig"]
+    var rigStr = data["computed_map"].replace("[", "").replace("]", "");
+    var rigPos = rigStr.split(",").map(Number)
+    //var rigPos = data["computed_map"].map((x) => parseInt(x))
+    //console.log(typeof(rigPos[1]))
     dataArr[rigPos[0]][rigPos[1]] = 150;
+
+    console.log(dataArr)
+
 
     // Iterate through the data again to place each
     // cell's data into their respective location.
@@ -117,16 +123,13 @@ export default function GridMap({ displayMap, setDisplayMap }) {
         .then((response) => {
           processGraphData(response.data);
           setDisplayMap(true);
-        })
-        .catch((_) => {
-          setDisplayMap(false);
         });
     }
-  }, [day, displayMap])
+  }, [day, setDisplayMap])
 
   return (
     <React.Fragment>
-      <DateSelector onSelection={setDay} disabled={!displayMap}/>
+      <DateSelector onSelection={setDay} />
       <div style={{
         display: 'flex',
         alignItems: 'center',

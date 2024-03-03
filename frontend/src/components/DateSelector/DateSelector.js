@@ -4,7 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function DateSelector({ onSelection, disabled }) {
+export default function DateSelector({ onSelection }) {
   const dates = Array(30).fill().map((_, i) => i + 1)
   const [date, setDate] = useState(1);
 
@@ -27,7 +27,6 @@ export default function DateSelector({ onSelection, disabled }) {
           value={date}
           onChange={handleChange}
           label="Date"
-          disabled={disabled}
         >
           {dates
             ?.map(d => (
